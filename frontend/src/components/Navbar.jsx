@@ -47,7 +47,6 @@ const Navbar = ({ activeSection, setActiveSection }) => {
           <span>Express HVAC</span>
         </a>
 
-        {/* Desktop Menu */}
         <ul className={`navbar-menu ${mobileMenuOpen ? 'open' : ''}`}>
           {navLinks.map((link) => (
             <li key={link.id}>
@@ -65,7 +64,6 @@ const Navbar = ({ activeSection, setActiveSection }) => {
           ))}
         </ul>
 
-        {/* Mobile Toggle */}
         <button
           className="navbar-toggle"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}

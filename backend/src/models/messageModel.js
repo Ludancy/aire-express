@@ -2,7 +2,6 @@ import mongoose from 'mongoose';
 import fs from 'fs';
 import { getLocalDbPath } from '../config/db.js';
 
-// Mongoose Schema y Model (para MongoDB)
 const MessageSchema = new mongoose.Schema({
   name: { type: String, required: true },
   email: { type: String, required: true },
@@ -15,7 +14,6 @@ const MessageSchema = new mongoose.Schema({
 
 const MongoMessage = mongoose.models.Message || mongoose.model('Message', MessageSchema);
 
-// Helper para leer base de datos JSON
 const readLocalJSON = () => {
   try {
     const data = fs.readFileSync(getLocalDbPath(), 'utf-8');
@@ -26,7 +24,6 @@ const readLocalJSON = () => {
   }
 };
 
-// Helper para escribir base de datos JSON
 const writeLocalJSON = (data) => {
   try {
     fs.writeFileSync(getLocalDbPath(), JSON.stringify(data, null, 2), 'utf-8');
@@ -35,7 +32,6 @@ const writeLocalJSON = (data) => {
   }
 };
 
-// Interfaz unificada de Message
 export const MessageModel = {
   create: async (data) => {
     const isMongo = mongoose.connection.readyState === 1;
@@ -50,7 +46,7 @@ export const MessageModel = {
         read: false,
         createdAt: new Date().toISOString()
       };
-      messages.unshift(newMessage); // Agregar al inicio (más recientes primero)
+      messages.unshift(newMessage);
       writeLocalJSON(messages);
       return newMessage;
     }

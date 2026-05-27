@@ -12,12 +12,10 @@ import './App.css';
 function App() {
   const [activeSection, setActiveSection] = useState('inicio');
 
-  // Efecto para actualizar el título del documento para SEO básico
   useEffect(() => {
     document.title = 'Multiservicios Express HVAC | Climatización y Refrigeración Industrial';
   }, []);
 
-  // Observer para resaltar el link activo en la navegación
   useEffect(() => {
     const sections = ['inicio', 'servicios', 'nosotros', 'contacto'];
     const handleScroll = () => {

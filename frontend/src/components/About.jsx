@@ -34,7 +34,6 @@ const About = () => {
     <section id="nosotros" className="about-section">
       <div className="container">
         <div className="about-grid">
-          {/* Lado Izquierdo: Visual & Años de Experiencia */}
           <motion.div
             className="about-visual"
             initial={{ opacity: 0, x: -30 }}
@@ -51,7 +50,6 @@ const About = () => {
             </div>
           </motion.div>
 
-          {/* Lado Derecho: Textos y Timeline */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -67,7 +65,6 @@ const About = () => {
 
             <h3 className="about-features-title" style={{ marginBottom: '24px' }}>Nuestra Historia</h3>
             
-            {/* Timeline Contenedor */}
             <div className="about-timeline">
               <div className="timeline-line"></div>
               {timelineItems.map((item, index) => (

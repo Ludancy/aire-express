@@ -14,7 +14,6 @@ const Footer = ({ onLinkClick }) => {
     <footer className="footer">
       <div className="container">
         <div className="footer-grid">
-          {/* Columna 1: Branding y Socials */}
           <div className="footer-branding">
             <a href="#inicio" className="footer-logo" onClick={handleScrollTop}>
               <img src="/logo.jpg" alt="Aire Express" className="footer-logo-img" />
@@ -44,7 +43,6 @@ const Footer = ({ onLinkClick }) => {
             </div>
           </div>
 
-          {/* Columna 2: Secciones */}
           <div className="footer-col">
             <h4>Secciones</h4>
             <ul className="footer-links">
@@ -71,7 +69,6 @@ const Footer = ({ onLinkClick }) => {
             </ul>
           </div>
 
-          {/* Columna 3: Servicios */}
           <div className="footer-col">
             <h4>Servicios</h4>
             <ul className="footer-links">
@@ -90,7 +87,6 @@ const Footer = ({ onLinkClick }) => {
             </ul>
           </div>
 
-          {/* Columna 4: Contacto */}
           <div className="footer-col">
             <h4>Contacto</h4>
             <div className="footer-info-item">
@@ -108,7 +104,6 @@ const Footer = ({ onLinkClick }) => {
           </div>
         </div>
 
-        {/* Sección Inferior de Footer */}
         <div className="footer-bottom">
           <p>© {currentYear} Multiservicios Express HVAC. Todos los derechos reservados.</p>
           <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>

@@ -7,7 +7,6 @@ const Hero = ({ onActionClick }) => {
     <header id="inicio" className="hero">
       <div className="container">
         <div className="hero-grid">
-          {/* Lado Izquierdo: Textos y CTA */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
@@ -44,7 +43,6 @@ const Hero = ({ onActionClick }) => {
             </div>
           </motion.div>
 
-          {/* Lado Derecho: Tarjeta Visual de Alta Gama */}
           <motion.div
             className="hero-visual"
             initial={{ opacity: 0, scale: 0.95 }}

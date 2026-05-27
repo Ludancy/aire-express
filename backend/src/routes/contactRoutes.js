@@ -4,7 +4,6 @@ import nodemailer from 'nodemailer';
 
 const router = express.Router();
 
-// Middleware simple de autenticación de Administrador
 const adminAuth = (req, res, next) => {
   const adminSecret = process.env.ADMIN_SECRET || 'admin123';
   const clientSecret = req.headers['x-admin-secret'];
@@ -16,7 +15,6 @@ const adminAuth = (req, res, next) => {
   }
 };
 
-// POST /api/contact - Recibir mensaje y enviarlo
 router.post('/contact', async (req, res) => {
   try {
     const { name, email, phone, subject, message } = req.body;
@@ -25,7 +23,6 @@ router.post('/contact', async (req, res) => {
       return res.status(400).json({ success: false, error: 'Por favor, completa todos los campos obligatorios.' });
     }
 
-    // Guardar en la base de datos (MongoDB o JSON Fallback)
     const savedMessage = await MessageModel.create({
       name,
       email,
@@ -35,13 +32,11 @@ router.post('/contact', async (req, res) => {
       createdAt: new Date()
     });
 
-    // --- Simulación / Envío de Email ---
-    console.log('✉️ Nuevo mensaje guardado en la base de datos. Simulando envío de correo...');
+    console.log('Nuevo mensaje guardado. Simulando envio de correo...');
     console.log(`De: ${name} <${email}>`);
     console.log(`Asunto: ${subject}`);
     console.log(`Mensaje: ${message}`);
 
-    // Si se configuran variables de entorno para Nodemailer, enviamos un correo real
     if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
       try {
         const transporter = nodemailer.createTransport({
@@ -76,12 +71,10 @@ router.post('/contact', async (req, res) => {
         };
 
         await transporter.sendMail(mailOptions);
-        console.log('✅ Correo electrónico enviado correctamente a través de Nodemailer.');
+        console.log('Correo electrónico enviado correctamente.');
       } catch (emailError) {
-        console.error('⚠️ Error enviando correo real (Nodemailer):', emailError.message);
+        console.error('Error enviando correo real:', emailError.message);
       }
-    } else {
-      console.log('💡 Envío de correo real no configurado (Variables de Nodemailer ausentes). Mensaje simulado en consola.');
     }
 
     res.status(201).json({
@@ -91,24 +84,22 @@ router.post('/contact', async (req, res) => {
     });
 
   } catch (error) {
-    console.error('❌ Error en el endpoint de contacto:', error);
+    console.error('Error en el endpoint de contacto:', error);
     res.status(500).json({ success: false, error: 'Hubo un error al procesar tu mensaje de contacto.' });
   }
 });
 
-// GET /api/admin/messages - Obtener todos los mensajes (Admin)
 router.get('/admin/messages', adminAuth, async (req, res) => {
   try {
     const messages = await MessageModel.find();
     res.status(200).json({ success: true, count: messages.length, data: messages });
   } catch (error) {
-    console.error('❌ Error obteniendo mensajes en el panel admin:', error);
+    console.error('Error obteniendo mensajes en el panel admin:', error);
     res.status(500).json({ success: false, error: 'Error al recuperar los mensajes.' });
   }
 });
 
-// PUT /api/admin/messages/:id - Marcar mensaje como leído / no leído (Admin)
-router.put('/admin/messages/:id', adminAuth, async (req, res) => {
+router.put('/api/admin/messages/:id', adminAuth, async (req, res) => {
   try {
     const { id } = req.params;
     const { read } = req.body;
@@ -121,13 +112,12 @@ router.put('/admin/messages/:id', adminAuth, async (req, res) => {
 
     res.status(200).json({ success: true, message: 'Mensaje actualizado correctamente.', data: updated });
   } catch (error) {
-    console.error('❌ Error actualizando estado de mensaje:', error);
+    console.error('Error actualizando estado de mensaje:', error);
     res.status(500).json({ success: false, error: 'Error al actualizar el mensaje.' });
   }
 });
 
-// DELETE /api/admin/messages/:id - Eliminar un mensaje (Admin)
-router.delete('/admin/messages/:id', adminAuth, async (req, res) => {
+router.delete('/api/admin/messages/:id', adminAuth, async (req, res) => {
   try {
     const { id } = req.params;
     const deleted = await MessageModel.findByIdAndDelete(id);
@@ -138,7 +128,7 @@ router.delete('/admin/messages/:id', adminAuth, async (req, res) => {
 
     res.status(200).json({ success: true, message: 'Mensaje eliminado correctamente.' });
   } catch (error) {
-    console.error('❌ Error eliminando mensaje:', error);
+    console.error('Error eliminando mensaje:', error);
     res.status(500).json({ success: false, error: 'Error al eliminar el mensaje.' });
   }
 });

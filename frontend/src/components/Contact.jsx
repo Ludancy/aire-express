@@ -12,7 +12,7 @@ const Contact = () => {
   });
 
   const [loading, setLoading] = useState(false);
-  const [feedback, setFeedback] = useState(null); // { type: 'success' | 'error', text: string }
+  const [feedback, setFeedback] = useState(null);
 
   const contactOptions = [
     {
@@ -51,7 +51,6 @@ const Contact = () => {
     setLoading(true);
     setFeedback(null);
 
-    // Validaciones básicas de correo y teléfono
     if (!formData.name || !formData.email || !formData.phone || !formData.subject || !formData.message) {
       setFeedback({ type: 'error', text: 'Por favor, rellena todos los campos obligatorios.' });
       setLoading(false);
@@ -59,7 +58,6 @@ const Contact = () => {
     }
 
     try {
-      // Petición real al backend
       const response = await fetch('http://localhost:5000/api/contact', {
         method: 'POST',
         headers: {
@@ -73,7 +71,7 @@ const Contact = () => {
       if (response.ok && result.success) {
         setFeedback({
           type: 'success',
-          text: '✅ ¡Mensaje enviado con éxito! Tu consulta ha sido registrada y se ha simulado el envío de un correo de notificación.'
+          text: '¡Mensaje enviado con éxito! Tu consulta ha sido registrada.'
         });
         setFormData({
           name: '',
@@ -92,7 +90,7 @@ const Contact = () => {
       console.error('Error enviando formulario:', error);
       setFeedback({
         type: 'error',
-        text: '❌ No se pudo conectar con el servidor backend. Asegúrate de que el servidor Node.js esté ejecutándose.'
+        text: 'No se pudo enviar el formulario. Intenta de nuevo más tarde.'
       });
     } finally {
       setLoading(false);
@@ -110,7 +108,6 @@ const Contact = () => {
         </div>
 
         <div className="contact-grid">
-          {/* Lado Izquierdo: Información Directa */}
           <motion.div
             className="contact-info-panel"
             initial={{ opacity: 0, x: -40 }}
@@ -143,7 +140,6 @@ const Contact = () => {
             </div>
           </motion.div>
 
-          {/* Lado Derecho: Formulario */}
           <motion.div
             className="contact-form-box"
             initial={{ opacity: 0, x: 40 }}
@@ -197,7 +193,7 @@ const Contact = () => {
                     id="phone"
                     name="phone"
                     className="form-control"
-                    placeholder="Ej. +1 555-0199"
+                    placeholder="Ej. +57 322 648 0757"
                     value={formData.phone}
                     onChange={handleInputChange}
                     required
@@ -238,7 +234,7 @@ const Contact = () => {
                 style={{ width: '100%' }}
                 disabled={loading}
               >
-                {loading ? 'Procesando consulta...' : 'Enviar Consulta'}
+                {loading ? 'Procesando...' : 'Enviar Consulta'}
                 <Send size={18} />
               </button>
             </form>
