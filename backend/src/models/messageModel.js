@@ -9,7 +9,7 @@ const MessageSchema = new mongoose.Schema({
   subject: { type: String, required: true },
   message: { type: String, required: true },
   read: { type: Boolean, default: false },
-  createdAt: { type: Date, default: Date.now }
+  fecha: { type: Date, default: Date.now }
 });
 
 const MongoMessage = mongoose.models.Message || mongoose.model('Message', MessageSchema);
@@ -44,7 +44,7 @@ export const MessageModel = {
         _id: Math.random().toString(36).substring(2, 11) + Date.now().toString(36),
         ...data,
         read: false,
-        createdAt: new Date().toISOString()
+        fecha: new Date().toISOString()
       };
       messages.unshift(newMessage);
       writeLocalJSON(messages);
@@ -56,7 +56,7 @@ export const MessageModel = {
     const isMongo = mongoose.connection.readyState === 1;
 
     if (isMongo) {
-      return await MongoMessage.find().sort({ createdAt: -1 });
+      return await MongoMessage.find().sort({ fecha: -1 });
     } else {
       return readLocalJSON();
     }

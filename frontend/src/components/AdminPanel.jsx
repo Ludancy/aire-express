@@ -36,8 +36,9 @@ const AdminPanel = () => {
   const fetchMessages = async () => {
     if (!isAuthenticated) return;
     setLoading(true);
+    const apiBaseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
     try {
-      const response = await fetch('http://localhost:5000/api/admin/messages', {
+      const response = await fetch(`${apiBaseUrl}/api/admin/messages`, {
         headers: {
           'x-admin-secret': secretKey
         }
@@ -60,8 +61,9 @@ const AdminPanel = () => {
   }, [isAuthenticated, secretKey]);
 
   const handleToggleRead = async (id, currentRead) => {
+    const apiBaseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
     try {
-      const response = await fetch(`http://localhost:5000/api/admin/messages/${id}`, {
+      const response = await fetch(`${apiBaseUrl}/api/admin/messages/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -83,8 +85,9 @@ const AdminPanel = () => {
 
   const handleDelete = async (id) => {
     if (!window.confirm('¿Estás seguro de que deseas eliminar este mensaje permanentemente?')) return;
+    const apiBaseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
     try {
-      const response = await fetch(`http://localhost:5000/api/admin/messages/${id}`, {
+      const response = await fetch(`${apiBaseUrl}/api/admin/messages/${id}`, {
         method: 'DELETE',
         headers: {
           'x-admin-secret': secretKey
@@ -219,12 +222,12 @@ const AdminPanel = () => {
                   {messages.map((msg) => (
                     <tr key={msg._id} className={!msg.read ? 'admin-row-unread' : ''}>
                       <td>
-                        {new Date(msg.createdAt).toLocaleDateString(undefined, {
+                        {msg.fecha ? new Date(msg.fecha).toLocaleDateString(undefined, {
                           month: 'short',
                           day: 'numeric',
                           hour: '2-digit',
                           minute: '2-digit'
-                        })}
+                        }) : 'N/A'}
                       </td>
                       <td style={{ fontWeight: 600, color: '#ffffff' }}>{msg.name}</td>
                       <td>
@@ -295,8 +298,8 @@ const AdminPanel = () => {
                     <p>{selectedMessage.name}</p>
                   </div>
                   <div className="admin-detail-item">
-                    <h5>Fecha Recibido</h5>
-                    <p>{new Date(selectedMessage.createdAt).toLocaleString()}</p>
+                    <h5>Fecha de Envío</h5>
+                    <p>{selectedMessage.fecha ? new Date(selectedMessage.fecha).toLocaleString() : 'N/A'}</p>
                   </div>
                   <div className="admin-detail-item">
                     <h5>Correo Electrónico</h5>
