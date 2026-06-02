@@ -1209,6 +1209,9 @@ textarea.form-control {
     transition: var(--transition-smooth);
     pointer-events: none;
   }
+  .navbar-scrolled .navbar-menu {
+    top: 70px;
+  }
   .navbar-menu .navbar-link {
     color: #666666;
   }

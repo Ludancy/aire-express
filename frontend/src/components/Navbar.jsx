@@ -40,7 +40,7 @@ const Navbar = ({ activeSection, setActiveSection }) => {
   };
 
   return (
-    <nav className={`navbar ${scrolled ? 'navbar-scrolled' : ''}`}>
+    <nav className={`navbar ${scrolled || mobileMenuOpen ? 'navbar-scrolled' : ''}`}>
       <div className="navbar-container">
         <a href="#inicio" className="navbar-logo" onClick={(e) => { e.preventDefault(); handleLinkClick('inicio'); }}>
           <img src="/logo.jpg" alt="Aire Express" className="navbar-logo-img" />
