@@ -18,7 +18,7 @@
 *   [Express](https://expressjs.com/) - El framework de NodeJS con el que programamos las rutas y la API del servidor.
 *   [MongoDB](https://www.mongodb.com/) - La base de datos no relacional para guardar los mensajes de los clientes.
 
-## 🚀 Instalación y Configuración
+## Instalación y Configuración
 
 Sigue estos pasos para configurar el proyecto en tu entorno local.
 
